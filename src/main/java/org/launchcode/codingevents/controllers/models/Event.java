@@ -8,11 +8,11 @@ public class Event {
     private static int nextId = 1;
 
     private String name;
-    private String descriptions;
+    private String description;
 
-    public Event(String name, String descriptions) {
+    public Event(String name, String description) {
         this.name = name;
-        this.descriptions = descriptions;
+        this.description = description;
         this.id = nextId;
         nextId ++;
 
@@ -26,12 +26,12 @@ public class Event {
         this.name = name;
     }
 
-    public String getDescriptions() {
-        return descriptions;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescriptions(String descriptions) {
-        this.descriptions = descriptions;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getId() {
@@ -40,7 +40,7 @@ public class Event {
 
     @Override
     public String toString() {
-        return name + descriptions;
+        return name + description;
     }
 
     @Override
