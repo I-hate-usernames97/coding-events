@@ -1,6 +1,9 @@
 package org.launchcode.codingevents.controllers;
 
-import org.springframework.stereotype.Controller;
+import org.launchcode.codingevents.controllers.models.Event;
+import org.launchcode.codingevents.data.EventData;
+
+import org.springframework.stereotype.*;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,32 +13,46 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Chris Bay
- */
+
 @Controller
 @RequestMapping("events")
 public class EventController {
 
-    private static List<String> events = new ArrayList<>();
 
     @GetMapping
-    public String displayAllEvents(Model model) {
-        model.addAttribute("title", "All Events");
-        model.addAttribute("events", events);
-        return "events/index";
+    public String dusplayAllEvents(Model model) {
+        model.addAttribute("events", EventData.getAll());
+        return "events/index.html";
     }
 
     @GetMapping("create")
-    public String displayCreateEventForm(Model model) {
-        model.addAttribute("title", "Create Event");
+    public String renderCreateEvent() {
         return "events/create";
     }
 
     @PostMapping("create")
-    public String processCreateEventForm(@RequestParam String eventName) {
-        events.add(eventName);
+    public String createEvent(@RequestParam String eventName, String eventDescriptions) {
+        EventData.addEvent((new Event(eventName, eventDescriptions)));
         return "redirect:";
     }
 
+    @GetMapping("delete")
+    public String dusplayDeleteEventForm(Model model) {
+
+        model.addAttribute("title", "Detele Events");
+        model.addAttribute("events", EventData.getAll());
+
+        return "events/delete";
+    }
+
+    @PostMapping("delete")
+    public String deleteEvent(@RequestParam(required = false) int[] eventIds) {
+
+        if (eventIds != null) {
+            for (int id : eventIds) {
+                EventData.remove(id);
+            }
+        }
+        return "redirect:";
+    }
 }
