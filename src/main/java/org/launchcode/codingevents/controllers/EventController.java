@@ -73,26 +73,20 @@ public class EventController {
     }
 
     @GetMapping("edit/{eventId}")
-    public String displayEditForm(Model model, @PathVariable int id) {
-        Optional<Event> event = eventRepository.findById(id);
-        model.addAttribute("event", event);
-        String title = "Edit Event " + event;
-        model.addAttribute("title", title );
+    public String displayEditForm(Model model, @PathVariable int eventId) {
+        model.addAttribute("event", eventRepository.findById(eventId));
         model.addAttribute("types", EventType.values());
+        eventRepository.deleteById(eventId);
         return "events/edit";
     }
 
     @PostMapping("edit")
-    public String processEditForm(int eventId, @ModelAttribute Event nawEvent ) {
-       eventRepository.findById(eventId);
+    public String processEditForm(Event eventId, @ModelAttribute Event nawEvent ) {
 
-//        eventToEdit.setName(nawEvent.getName());
-//        eventToEdit.setDescription(nawEvent.getDescription());
-//        eventToEdit.setContactEmail(nawEvent.getContactEmail());
-//        eventToEdit.setLocation(nawEvent.getLocation());
-//        eventToEdit.setNumberOfAttendees(nawEvent.getNumberOfAttendees());
-//        eventToEdit.setType(nawEvent.getType());
+        eventRepository.save(eventId);
+
         return "redirect:";
     }
+
 }
 
