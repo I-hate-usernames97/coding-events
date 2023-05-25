@@ -3,8 +3,9 @@ package org.launchcode.codingevents.controllers;
 
 
 import org.launchcode.codingevents.controllers.models.Event;
-import org.launchcode.codingevents.controllers.models.EventType;
 
+import org.launchcode.codingevents.controllers.models.EventCategory;
+import org.launchcode.codingevents.data.EventCategoryRepository;
 import org.launchcode.codingevents.data.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,19 +25,34 @@ public class EventController {
     @Autowired
     private EventRepository eventRepository;
 
-    @GetMapping
-    public String displayAllEvents(Model model) {
-        model.addAttribute("title", "All Events");
+    @Autowired
+    private EventCategoryRepository eventCategoryRepository;
 
-        model.addAttribute("events", eventRepository.findAll());
-        return "events/index.html";
+    @GetMapping
+    public String displayEvents(@RequestParam(required = false) Integer categoryId, Model model) {
+
+        if (categoryId == null) {
+            model.addAttribute("title", "All Events");
+            model.addAttribute("events", eventRepository.findAll());
+        } else {
+            Optional<EventCategory> result = eventCategoryRepository.findById(categoryId);
+            if (result.isEmpty()) {
+                model.addAttribute("title", "Invalid Category ID: " + categoryId);
+            } else {
+                EventCategory category = result.get();
+                model.addAttribute("title", "Events in category: " + category.getName());
+                model.addAttribute("events", category.getEvents());
+            }
+        }
+
+        return "events/index";
     }
 
     @GetMapping("create")
     public String renderCreateEvent(Model model) {
         model.addAttribute("title", "Create Event");
-        model.addAttribute("event", new Event());
-        model.addAttribute("types", EventType.values());
+        model.addAttribute(new Event());
+        model.addAttribute("categories", eventCategoryRepository.findAll());
         return "events/create";
     }
 
@@ -45,7 +61,7 @@ public class EventController {
                                          Errors errors, Model model) {
         if(errors.hasErrors()) {
             model.addAttribute("title", "Create Event");
-            model.addAttribute("types", EventType.values());
+            model.addAttribute("categories", eventCategoryRepository.findAll());
             return "events/create";
         }
 
@@ -74,16 +90,36 @@ public class EventController {
 
     @GetMapping("edit/{eventId}")
     public String displayEditForm(Model model, @PathVariable int eventId) {
-        model.addAttribute("event", eventRepository.findById(eventId));
-        model.addAttribute("types", EventType.values());
-        eventRepository.deleteById(eventId);
-        return "events/edit";
+
+
+        Optional optEvent = eventRepository.findById(eventId);
+        if (optEvent.isPresent()) {
+            Event event = (Event) optEvent.get();
+            model.addAttribute("event", eventRepository.findById(eventId));
+            model.addAttribute("categories", eventCategoryRepository.findAll());
+
+            return "events/edit";
+        }
+
+        return "redirect:";
     }
 
     @PostMapping("edit")
-    public String processEditForm(Event eventId, @ModelAttribute Event nawEvent ) {
+    public String processEditForm(@RequestParam(required = false)Integer eventId, @ModelAttribute Event newEvent ) {
 
-        eventRepository.save(eventId);
+        Optional optEvent = eventRepository.findById(eventId);
+        if (optEvent.isPresent()) {
+            Event event = (Event) optEvent.get();
+
+            newEvent.setName(event.getName());
+            newEvent.setEventDetails(event.getEventDetails());
+            newEvent.setLocation(event.getLocation());
+            newEvent.setNumberOfAttendees(event.getNumberOfAttendees());
+            newEvent.setEventCategory(event.getEventCategory());
+
+            eventRepository.save(newEvent);
+
+        }
 
         return "redirect:";
     }
