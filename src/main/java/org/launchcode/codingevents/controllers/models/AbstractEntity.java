@@ -29,6 +29,10 @@ public abstract class AbstractEntity {
     public int hashCode() {
         return Objects.hash(getId());
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }
 
 

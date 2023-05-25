@@ -10,6 +10,7 @@ import org.launchcode.codingevents.data.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +45,6 @@ public class EventController {
                 model.addAttribute("events", category.getEvents());
             }
         }
-
         return "events/index";
     }
 
@@ -94,7 +94,7 @@ public class EventController {
 
         Optional optEvent = eventRepository.findById(eventId);
         if (optEvent.isPresent()) {
-            Event event = (Event) optEvent.get();
+//            Event event = (Event) optEvent.get();
             model.addAttribute("event", eventRepository.findById(eventId));
             model.addAttribute("categories", eventCategoryRepository.findAll());
 
@@ -105,23 +105,29 @@ public class EventController {
     }
 
     @PostMapping("edit")
-    public String processEditForm(@RequestParam(required = false)Integer eventId, @ModelAttribute Event newEvent ) {
+    public String processEditForm( @ModelAttribute Event newEvent ) {
+//       @RequestParam Integer id,
+//        Optional<Event> optEvent = eventRepository.findById(id);
+//        if (optEvent.isPresent()) {
+//            eventRepository.save(newEvent);
+//        }
+        eventRepository.save(newEvent);
+        return "redirect:";
+    }
 
-        Optional optEvent = eventRepository.findById(eventId);
-        if (optEvent.isPresent()) {
-            Event event = (Event) optEvent.get();
+    @GetMapping("detail")
+    public String displayEventDetail(@RequestParam Integer eventId, Model model) {
 
-            newEvent.setName(event.getName());
-            newEvent.setEventDetails(event.getEventDetails());
-            newEvent.setLocation(event.getLocation());
-            newEvent.setNumberOfAttendees(event.getNumberOfAttendees());
-            newEvent.setEventCategory(event.getEventCategory());
-
-            eventRepository.save(newEvent);
-
+        Optional<Event> optEvent = eventRepository.findById(eventId);
+        if(optEvent.isEmpty()) {
+            model.addAttribute("title", "Invalid Event ID");
+        } else {
+            Event event =optEvent.get();
+            model.addAttribute("title", event.getName() + " Detail");
+            model.addAttribute("event", event);
         }
 
-        return "redirect:";
+        return "events/detail";
     }
 
 }

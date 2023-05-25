@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments :: head"></head>
+<body class="container">
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<h1 th:text="${title}"></h1>
+
+<p th:unless="${tags} and ${tags.size()}" >No Categories!</p>
+
+<th:block th:if="${tags} and ${tags.size()}">
+
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>tags</th>
+        </tr>
+        </thead>
+        <tr th:each="tag : ${tags}">
+            <td><a th:text="${tag.displayName}" ></a></td>
+        </tr>
+
+    </table>
+</th:block>
+</body>
+</html>
