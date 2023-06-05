@@ -1,6 +1,5 @@
 package org.launchcode.codingevents.controllers;
 
-import org.launchcode.codingevents.controllers.models.EventCategory;
 import org.launchcode.codingevents.controllers.models.Tag;
 import org.launchcode.codingevents.data.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;

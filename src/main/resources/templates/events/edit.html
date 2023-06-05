@@ -8,6 +8,8 @@
 
 <h1 th:text="${title}"></h1>
 
+<span th:each=" tag : ${event.tags}" th:text="${tag.displayName} + ' ' "></span>
+
 <form method="post" th:action="@{/events/edit}">
 
     <div class="form-group">
@@ -47,14 +49,15 @@
                         th:text="${eventCategory.name}"
                 ></option>
             </select>
-            <p class="error" th:errors="${event.eventCategory}"></p>
         </label>
     </div>
 
     <div class="form-group">
         <input type="submit" value="Edit event" class="btn btn-success">
     </div>
-    <input type="hidden" th:field="${event.id}" name="id" />
+    <input type="hidden" th:field="${event.id}" name="id" >
+    <input type="hidden" th:field="${event.tags}" name="tags">
+
 </form>
 </body>
 </html>
