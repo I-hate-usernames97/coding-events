@@ -13,14 +13,10 @@
 <nav th:fragment="navigation">
     <ul class="nav">
         <li class="nav-item"><a class="nav-link" href="/events"> Home </a> </li>
-        <li class="nav-item"><a class="nav-link" href="/events/create"> Create Event </a> </li>
-        <li class="nav-item"><a class="nav-link" href="/events/delete"> Delete Event </a> </li>
         <li class="nav-item"><a class="nav-link" href="/eventCategories"> Event Categories </a> </li>
-        <li class="nav-item"><a class="nav-link" href="/eventCategories/create"> Create new Categories </a> </li>
-        <li class="nav-item"><a class="nav-link" href="/tags"> Tags </a> </li>
-        <li class="nav-item"><a class="nav-link" href="/tags/create"> Create Tags </a> </li>
-        <li class="nav-item"><a class="nav-link" href="/tags/delete"> Delete Tags </a> </li>
-
+<!--        <li class="nav-item"><a class="nav-link" href="/tags"> Tags </a> </li>-->
+        <li class="nav-item"><a class="nav-link" th:text="${session.user == null ? 'Login' : 'Logout'}"
+               th:href="${session.user == null ? '/login' : '/logout'}"></a></li>
     </ul>
 </nav>
 

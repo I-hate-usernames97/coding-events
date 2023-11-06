@@ -20,7 +20,6 @@ public class EventCategory extends AbstractEntity {
     @OneToMany(mappedBy = "eventCategory")
     private final List<Event> events = new ArrayList<>();
 
-
     public EventCategory() {}
 
     public String getName() {

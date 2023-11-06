@@ -5,6 +5,12 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
+<ul class="nav">
+    <li class="nav-item"><a class="nav-link" href="/tags/create"> Create Tags </a> </li>
+    <li class="nav-item"><a class="nav-link" href="/tags/delete"> Delete Tags </a> </li>
+</ul>
+
+
 <h1 th:text="${title}"></h1>
 
 <p th:unless="${tags} and ${tags.size()}" >No Categories!</p>

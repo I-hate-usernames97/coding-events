@@ -5,8 +5,12 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<h1 th:text="${title}">All Events</h1>
+<ul class="nav">
+    <li class="nav-item"><a class="nav-link" href="/events/create"> Create Event </a> </li>
+    <li class="nav-item"><a class="nav-link" href="/events/delete"> Delete Event </a> </li>
+</ul>
 
+<h1 th:text="${title}">All Events</h1>
 
 <p th:unless="${events} and ${events.size()}" >No events!</p>
 
@@ -19,7 +23,7 @@
         </thead>
         <tr th:each="event : ${events}">
             <td>
-                <a th:href="'/events/detail?eventId=' + ${event.id}" th:text="${event.name}"></a>
+                <a th:href="'/events/detail?eventId=' + ${event.id}" th:text="${event.eventName}"></a>
             </td>
         </tr>
     </table>

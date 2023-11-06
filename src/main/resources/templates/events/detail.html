@@ -11,7 +11,7 @@
 
         <tr>
             <th>Name</th>
-            <td th:text="${event.name}"></td>
+            <td th:text="${event.eventName}"></td>
         </tr>
         <tr>
             <th>Description</th>
@@ -36,18 +36,17 @@
         </tr>
 
         <tr>
-            <th>Tags</th>
+            <th>event user</th>
             <td>
-                <span th:each=" tag : ${event.tags}" th:text="${tag.displayName} + ' ' "></span>
+                <span th:text="${event.user.username} "></span>
             </td>
         </tr>
 
-        <tr>
-<!--            <td> <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a> </td>-->
-            <td> <a th:href="'/events/add-tag?eventId=' + ${event.id}">add tag</a> </td>
-        </tr>
     </table>
 
+<div>
+    <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
+</div>
 
 </body>
 </html>

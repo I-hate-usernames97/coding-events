@@ -11,9 +11,10 @@ import java.util.List;
 public class Event extends AbstractEntity {
 
 
+
     @NotBlank(message = "Name is required.")
     @Size(min = 3, max = 50, message = "Name must be between 3 and 50 characters")
-    private String name;
+    private String eventName;
 
     @NotBlank(message = "location is required")
     private String location;
@@ -25,6 +26,10 @@ public class Event extends AbstractEntity {
     @NotNull(message = "Category is required")
     private EventCategory eventCategory;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @ManyToMany
     private final List<Tag> tags = new ArrayList<>();
 
@@ -33,22 +38,25 @@ public class Event extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private EventDetails eventDetails;
 
-    public Event(String name, String location, int numberOfAttendees, EventCategory eventCategory) {
-        this.name = name;
+
+
+    public Event(String eventName, String location, int numberOfAttendees, EventCategory eventCategory, User user) {
+        this.eventName = eventName;
         this.location = location;
         this.numberOfAttendees = numberOfAttendees;
         this.eventCategory = eventCategory;
+        this.user = user;
     }
 
     public Event() {
     }
 
-    public String getName() {
-        return name;
+    public String getEventName() {
+        return eventName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEventName(String name) {
+        this.eventName = name;
     }
 
     public String getLocation() {
@@ -91,9 +99,17 @@ public class Event extends AbstractEntity {
         this.tags.add(tag);
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public String toString() {
-        return name ;
+        return eventName ;
     }
 
 
