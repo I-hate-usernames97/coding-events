@@ -15,10 +15,38 @@
         <li class="nav-item"><a class="nav-link" href="/events"> Home </a> </li>
         <li class="nav-item"><a class="nav-link" href="/eventCategories"> Event Categories </a> </li>
 <!--        <li class="nav-item"><a class="nav-link" href="/tags"> Tags </a> </li>-->
-        <li class="nav-item"><a class="nav-link" th:text="${session.user == null ? 'Login' : 'Logout'}"
-               th:href="${session.user == null ? '/login' : '/logout'}"></a></li>
+        <li class="nav-item">
+            <a class="nav-link" th:text="${session.user == null ? 'Login' : 'Logout'}"
+               th:href="${session.user == null ? '/login' : '/logout'}">
+            </a>
+        </li>
+        <li>
+            <a class="nav-link" th:text="${session.user == null ? 'Register' : 'Profile'}"
+               th:href="${session.user == null ? '/register' : '/profile'}">
+            </a>
+        </li>
     </ul>
 </nav>
+
+<div th:fragment="displayEvents">
+
+    <p th:unless="${events} and ${events.size()}" >No events!</p>
+
+    <th:block th:if="${events} and ${events.size()}">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Event Name</th>
+                </tr>
+            </thead>
+                <tr th:each="event : ${events}">
+                    <td>
+                        <a th:href="'/events/detail?eventId=' + ${event.id}" th:text="${event.eventName}"></a>
+                    </td>
+                </tr>
+        </table>
+    </th:block>
+</div>
 
 </body>
 </html>

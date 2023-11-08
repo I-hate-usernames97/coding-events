@@ -12,33 +12,45 @@
 
 <form method="post" th:action="@{/events/edit}">
 
-    <div class="form-group">
-        <label>Edit Event Name
-            <input type="text" th:field="${event.eventName}" class="form-control">
-        </label>
-    </div>
-    <div class="form-group">
-        <label>Edit Event Description
-            <input type="text" th:field="${event.eventDetails.description}" class="form-control">
-        </label>
+    <div class="form-group" th:if="${user != null}">
+        <input type="hidden" th:field="${event.user.id}"  class="form-control" />
+        <input type="hidden" th:field="${event.id}"  class="form-control" />
+
     </div>
 
     <div class="form-group">
-        <label>Edit location
-            <input type="text" th:field="${event.location}" class="form-control">
+        <label> Event Name
+            <input type="text" th:field="${event.eventName}" class="form-control" />
         </label>
+        <p class="error" th:errors="${event.eventName}"></p>
     </div>
 
     <div class="form-group">
-        <label>Edit Number Of Attendees
-            <input type="number" th:field="${event.numberOfAttendees}" class="form-control">
+        <label>Description
+            <input type="text" th:field="${event.eventDetails.description}" class="form-control" />
         </label>
+        <p class="error" th:errors="${event.eventDetails.description}"></p>
+    </div>
+
+    <div class="form-group">
+        <label>Location
+            <input type="text" th:field="${event.location}" class="form-control" />
+        </label>
+        <p class="error" th:errors="${event.location}"></p>
+    </div>
+
+    <div class="form-group">
+        <label>Number Of Attendees
+            <input type="number" th:field="${event.numberOfAttendees}" class="form-control" />
+        </label>
+        <p class="error" th:errors="${event.numberOfAttendees}"></p>
     </div>
 
     <div class="form-group">
         <label>Contact Email
-            <input type="text" th:field="${event.eventDetails.contactEmail}" class="form-control">
+            <input type="text" th:field="${event.eventDetails.contactEmail}" class="form-control" />
         </label>
+        <p class="error" th:errors="${event.eventDetails.contactEmail}"></p>
     </div>
 
     <div class="form-group">
@@ -49,15 +61,13 @@
                         th:text="${eventCategory.name}"
                 ></option>
             </select>
+            <p class="error" th:errors="${event.eventCategory}"></p>
         </label>
     </div>
 
     <div class="form-group">
-        <input type="submit" value="Edit event" class="btn btn-success">
+        <input type="submit" value="Edit" class="btn btn-success" />
     </div>
-    <input type="hidden" th:field="${event.id}" name="id" >
-    <input type="hidden" th:field="${event.tags}" name="tags">
-
 </form>
 </body>
 </html>

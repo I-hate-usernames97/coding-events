@@ -10,7 +10,7 @@
     <table class="table table-striped">
 
         <tr>
-            <th>Name</th>
+            <th>Event Name</th>
             <td th:text="${event.eventName}"></td>
         </tr>
         <tr>
@@ -36,16 +36,25 @@
         </tr>
 
         <tr>
-            <th>event user</th>
+            <th>Event Organizer</th>
             <td>
                 <span th:text="${event.user.username} "></span>
             </td>
         </tr>
 
+        <tr>
+            <th>Event Organizer</th>
+            <td>
+                <span th:text="${event.user.id} "></span>
+            </td>
+        </tr>
     </table>
 
-<div>
+<div th:if="${event.user.id == user.id }">
     <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
+</div>
+<div th:unless="${event.user.id == user.id }">
+    <a href="/events">home</a>
 </div>
 
 </body>

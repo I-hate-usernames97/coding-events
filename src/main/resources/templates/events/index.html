@@ -13,24 +13,7 @@
 <h1 th:text="${title}">Coding Events</h1>
 
 
-<p th:unless="${events} and ${events.size()}" >No events!</p>
-
-<th:block th:if="${events} and ${events.size()}">
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Event Name</th>
-        </tr>
-        </thead>
-        <tr th:each="event : ${events}">
-            <td>
-                <a th:href="'/events/detail?eventId=' + ${event.id}" th:text="${event.eventName}"></a>
-            </td>
-        </tr>
-    </table>
-
-</th:block>
-
+<div th:replace="fragments :: displayEvents"></div>
 
 
 </body>
