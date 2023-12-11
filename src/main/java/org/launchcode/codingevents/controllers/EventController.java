@@ -47,6 +47,8 @@ public class EventController {
     public String displayEvents(@RequestParam(required = false) Integer categoryId, Integer tagId, Model model) {
 
 
+        model.addAttribute("searchForm", new SearchForm());
+
         if (categoryId == null && tagId == null) {
             model.addAttribute("title", "Code Events");
             model.addAttribute("events", eventRepository.findAll());
@@ -79,6 +81,7 @@ public class EventController {
 
         model.addAttribute("title", "Create Event");
         model.addAttribute(new Event());
+        model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("categories", eventCategoryRepository.findAll());
         model.addAttribute("user", userRepository.findById(user.getId()));
         return "events/create";
@@ -88,6 +91,7 @@ public class EventController {
     public String processCreateEventForm(@Valid Event newEvent, Errors errors, Model model, HttpServletRequest request)  {
 
         User user = getCurrentUser(request);
+        model.addAttribute("searchForm", new SearchForm());
 
         if(errors.hasErrors()) {
             model.addAttribute("title", "Create Event");
@@ -107,6 +111,8 @@ public class EventController {
     public String displayDeleteEventForm(Model model, HttpServletRequest request) {
 
         User user = getCurrentUser(request);
+        model.addAttribute("searchForm", new SearchForm());
+
 
         model.addAttribute("title", "Delete Events");
         model.addAttribute("events", eventRepository.findAllByUserId(user.getId()));
@@ -128,6 +134,7 @@ public class EventController {
     public String displayEventDetail(@RequestParam Integer eventId, Model model, HttpServletRequest request) {
 
         User user = getCurrentUser(request);
+        model.addAttribute("searchForm", new SearchForm());
 
         Optional<Event> result = eventRepository.findById(eventId);
         if(result.isEmpty()) {
@@ -148,6 +155,7 @@ public class EventController {
     public String processEditForm(@ModelAttribute @Valid Event eventToBeEdited, Model model) {
         // Retrieve the existing event from the database
         Optional<Event> existingEventOptional = eventRepository.findById(eventToBeEdited.getId());
+        model.addAttribute("searchForm", new SearchForm());
 
         if (existingEventOptional.isPresent()) {
             Event existingEvent = existingEventOptional.get();
@@ -179,6 +187,7 @@ public class EventController {
     public String displayEditForm(Model model, @PathVariable int eventId, HttpServletRequest request ) {
 
         User user = getCurrentUser(request);
+        model.addAttribute("searchForm", new SearchForm());
 
         Optional<Event> result = eventRepository.findById(eventId);
 

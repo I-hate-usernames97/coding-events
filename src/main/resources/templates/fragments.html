@@ -25,7 +25,18 @@
                th:href="${session.user == null ? '/register' : '/profile'}">
             </a>
         </li>
+        <li>
+            <a>
+                <form action="#" th:action="@{/search}" th:object="${searchForm}" method="post">
+                    <input type="text" th:field="${searchForm.query}" placeholder="Enter your search query"/>
+                    <button type="submit">Search</button>
+                </form>
+
+            </a>
+        </li>
     </ul>
+
+
 </nav>
 
 <div th:fragment="displayEvents">

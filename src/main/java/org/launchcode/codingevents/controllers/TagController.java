@@ -1,5 +1,6 @@
 package org.launchcode.codingevents.controllers;
 
+import org.launchcode.codingevents.controllers.models.SearchForm;
 import org.launchcode.codingevents.controllers.models.Tag;
 import org.launchcode.codingevents.data.TagRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class TagController {
     public String displayAllTags(Model model) {
 
         model.addAttribute("title", "All Tags");
+        model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("tags",tagRepository.findAll());
 
         return "tags/index";

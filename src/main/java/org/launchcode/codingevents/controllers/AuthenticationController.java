@@ -1,6 +1,7 @@
 package org.launchcode.codingevents.controllers;
 
 
+import org.launchcode.codingevents.controllers.models.SearchForm;
 import org.launchcode.codingevents.controllers.models.User;
 import org.launchcode.codingevents.controllers.models.dto.LoginFormDTO;
 import org.launchcode.codingevents.controllers.models.dto.RegisterFormDTO;
@@ -90,6 +91,8 @@ public class AuthenticationController {
     public String displayLoginForm(Model model) {
         model.addAttribute(new LoginFormDTO());
         model.addAttribute("title", "Log In");
+        model.addAttribute("searchForm", new SearchForm());
+
         return "login";
     }
 
