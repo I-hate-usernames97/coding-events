@@ -91,7 +91,6 @@ public class AuthenticationController {
     public String displayLoginForm(Model model) {
         model.addAttribute(new LoginFormDTO());
         model.addAttribute("title", "Log In");
-        model.addAttribute("searchForm", new SearchForm());
 
         return "login";
     }

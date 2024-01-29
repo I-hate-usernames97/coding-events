@@ -42,12 +42,6 @@
             </td>
         </tr>
 
-        <tr>
-            <th>Event Organizer</th>
-            <td>
-                <span th:text="${event.user.id} "></span>
-            </td>
-        </tr>
     </table>
 
 <div th:if="${event.user.id == user.id }">

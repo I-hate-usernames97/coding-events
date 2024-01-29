@@ -32,11 +32,11 @@ public class ProfileController {
     }
 
     @GetMapping
-    public String displayUserEvents(HttpServletRequest request, Model model) {
+    public String displayPorfilePage(HttpServletRequest request, Model model) {
 
         User user = getCurrentUser(request);
 
-        model.addAttribute("title", user.getUsername());
+        model.addAttribute("username", user.getUsername());
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("user", userRepository.findById(user.getId()));
         model.addAttribute("events", eventRepository.findAllByUserId(user.getId()));

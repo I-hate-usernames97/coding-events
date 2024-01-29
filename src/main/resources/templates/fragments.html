@@ -29,7 +29,15 @@
             <a>
                 <form action="#" th:action="@{/search}" th:object="${searchForm}" method="post">
                     <input type="text" th:field="${searchForm.query}" placeholder="Enter your search query"/>
+                    <label>Search by:</label>
+                    <label>User Name</label>
+                    <input type="radio" th:field="${searchForm.searchType}" value="user">
+                    <label>Event Name</label>
+                    <input type="radio" th:field="${searchForm.searchType}" value="eventName">
+                    <label>Location</label>
+                    <input type="radio" th:field="${searchForm.searchType}" value="location"><br>
                     <button type="submit">Search</button>
+                    <p th:text="${error}"></p>
                 </form>
 
             </a>

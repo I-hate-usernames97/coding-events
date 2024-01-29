@@ -5,12 +5,8 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<h1>Welcome </h1>
-
-<h1 th:text="${user.username}">profile page</h1>
-
+<h1 th:text="${title}">All Events</h1>
 <div th:replace="fragments :: displayEvents"></div>
-
 
 </body>
 </html>

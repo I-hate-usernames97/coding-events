@@ -23,6 +23,7 @@ public class HomeController {
         model.addAttribute("title", "Code Events");
         model.addAttribute("events", eventRepository.findAll());
         model.addAttribute("searchForm", new SearchForm());
+        model.addAttribute("error", "");
 
         return "index";
     }
