@@ -4,10 +4,15 @@
 <body class="container">
 
 <nav th:replace="fragments :: navigation"></nav>
-<ul class="nav">
-    <li class="nav-item"><a class="nav-link" href="/eventCategories/create"> Create new Categories </a> </li>
-    <li class="nav-item"><a class="nav-link" href="/eventCategories/delete"> Create Delete </a> </li>
-</ul>
+<nav class='navbar'>
+    <div class='navbar-container'>
+        <ul class="nav-menu">
+            <li class="nav-item"><a class="nav-link" href="/eventCategories/create"> Create new Categories </a> </li>
+            <li class="nav-item"><a class="nav-link" href="/eventCategories/delete"> Create Delete </a> </li>
+        </ul>
+    </div>
+</nav>
+
 
 <h1 th:text="${title}"></h1>
 

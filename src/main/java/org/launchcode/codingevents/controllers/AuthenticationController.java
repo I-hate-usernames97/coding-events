@@ -1,7 +1,5 @@
 package org.launchcode.codingevents.controllers;
 
-
-import org.launchcode.codingevents.controllers.models.SearchForm;
 import org.launchcode.codingevents.controllers.models.User;
 import org.launchcode.codingevents.controllers.models.dto.LoginFormDTO;
 import org.launchcode.codingevents.controllers.models.dto.RegisterFormDTO;

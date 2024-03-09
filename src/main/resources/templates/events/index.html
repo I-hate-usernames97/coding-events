@@ -5,16 +5,17 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<ul class="nav">
-    <li class="nav-item"><a class="nav-link" href="/events/create"> Create Event </a> </li>
-    <li class="nav-item"><a class="nav-link" href="/events/delete"> Delete Event </a> </li>
-</ul>
 
 <h1 th:text="${title}">Coding Events</h1>
 
-
 <div th:replace="fragments :: displayEvents"></div>
 
-
+<nav class='navbar'>
+    <div class='navbar-container'>
+        <ul class="nav-menu">
+            <li class="nav-item"><a class="nav-link" href="/events/create"> Create Event </a> </li>
+        </ul>
+    </div>
+</nav>
 </body>
 </html>

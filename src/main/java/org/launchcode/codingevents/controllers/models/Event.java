@@ -30,8 +30,6 @@ public class Event extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    private final List<Tag> tags = new ArrayList<>();
 
     @Valid
     @NotNull
@@ -89,14 +87,6 @@ public class Event extends AbstractEntity {
 
     public void setEventDetails(EventDetails eventDetails) {
         this.eventDetails = eventDetails;
-    }
-
-    public List<Tag> getTags() {
-        return tags;
-    }
-
-    public void addTag(Tag tag) {
-        this.tags.add(tag);
     }
 
     public User getUser() {

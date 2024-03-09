@@ -8,7 +8,6 @@
 
 <h1 th:text="${title}"></h1>
 
-<span th:each=" tag : ${event.tags}" th:text="${tag.displayName} + ' ' "></span>
 
 <form method="post" th:action="@{/events/edit}">
 

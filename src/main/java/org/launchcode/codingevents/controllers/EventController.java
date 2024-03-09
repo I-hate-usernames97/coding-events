@@ -4,7 +4,6 @@ package org.launchcode.codingevents.controllers;
 import org.launchcode.codingevents.controllers.models.*;
 import org.launchcode.codingevents.data.EventCategoryRepository;
 import org.launchcode.codingevents.data.EventRepository;
-import org.launchcode.codingevents.data.TagRepository;
 import org.launchcode.codingevents.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,8 +27,6 @@ public class EventController {
     @Autowired
     private EventCategoryRepository eventCategoryRepository;
 
-    @Autowired
-    private TagRepository tagRepository;
 
     @Autowired
     AuthenticationController authenticationController;
@@ -44,15 +41,15 @@ public class EventController {
 
 
     @GetMapping
-    public String displayEvents(@RequestParam(required = false) Integer categoryId, Integer tagId, Model model) {
+    public String displayEvents(@RequestParam(required = false) Integer categoryId, Model model) {
 
 
         model.addAttribute("searchForm", new SearchForm());
 
-        if (categoryId == null && tagId == null) {
+        if (categoryId == null ) {
             model.addAttribute("title", "Code Events");
             model.addAttribute("events", eventRepository.findAll());
-        } else if (categoryId != null)  {
+        } else {
             Optional<EventCategory> result = eventCategoryRepository.findById(categoryId);
             if (result.isEmpty()) {
                 model.addAttribute("title", "Invalid Category ID: " + categoryId);
@@ -61,15 +58,7 @@ public class EventController {
                 model.addAttribute("title", "Events in category: " + category.getName());
                 model.addAttribute("events", category.getEvents());
             }
-        } else {
-            Optional<Tag> result = tagRepository.findById(tagId);
-            if(result.isEmpty()) {
-                model.addAttribute("title", "Invalid Tag ID ");
-            }else {
-                Tag tag = result.get();
-                model.addAttribute("title", "Events in tag: " + tag.getName());
-                model.addAttribute("events", tag.getEvents());
-            }
+
         }
         return "events/index";
     }

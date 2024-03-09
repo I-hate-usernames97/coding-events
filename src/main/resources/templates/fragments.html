@@ -11,40 +11,33 @@
 <body>
 
 <nav th:fragment="navigation">
-    <ul class="nav">
-        <li class="nav-item"><a class="nav-link" href="/events"> Home </a> </li>
-        <li class="nav-item"><a class="nav-link" href="/eventCategories"> Event Categories </a> </li>
-<!--        <li class="nav-item"><a class="nav-link" href="/tags"> Tags </a> </li>-->
-        <li class="nav-item">
-            <a class="nav-link" th:text="${session.user == null ? 'Login' : 'Logout'}"
-               th:href="${session.user == null ? '/login' : '/logout'}">
-            </a>
-        </li>
-        <li>
-            <a class="nav-link" th:text="${session.user == null ? 'Register' : 'Profile'}"
-               th:href="${session.user == null ? '/register' : '/profile'}">
-            </a>
-        </li>
-        <li>
-            <a>
-                <form action="#" th:action="@{/search}" th:object="${searchForm}" method="post">
-                    <input type="text" th:field="${searchForm.query}" placeholder="Enter your search query"/>
-                    <label>Search by:</label>
-                    <label>User Name</label>
-                    <input type="radio" th:field="${searchForm.searchType}" value="user">
-                    <label>Event Name</label>
-                    <input type="radio" th:field="${searchForm.searchType}" value="eventName">
-                    <label>Location</label>
-                    <input type="radio" th:field="${searchForm.searchType}" value="location"><br>
-                    <button type="submit">Search</button>
-                    <p th:text="${error}"></p>
-                </form>
-
-            </a>
-        </li>
-    </ul>
-
-
+    <nav class='navbar'>
+        <div class='navbar-container'>
+            <ul class="nav-menu">
+                <li class="nav-item"><a class="nav-link" href="/events"> Home </a> </li>
+                <li class="nav-item"><a class="nav-link" href="/eventCategories"> Event Categories </a> </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:text="${session.user == null ? 'Login' : 'Logout'}"
+                     th:href="${session.user == null ? '/login' : '/logout'}">
+                    </a>
+                 </li>
+                <li>
+                    <a class="nav-link" th:text="${session.user == null ? 'Register' : 'Profile'}"
+                       th:href="${session.user == null ? '/register' : '/profile'}">
+                    </a>
+                </li>
+                <li>
+                    <div class="search-bar">
+                        <form action="#" th:action="@{/search}" th:object="${searchForm}" method="post">
+                            <input type="text" th:field="${searchForm.query}" placeholder="Search"/>
+                            <button type="submit">Search</button>
+                            <p th:text="${error}"></p>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </nav>
 
 <div th:fragment="displayEvents">
