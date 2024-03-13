@@ -47,7 +47,7 @@ public class EventController {
         model.addAttribute("searchForm", new SearchForm());
 
         if (categoryId == null ) {
-            model.addAttribute("title", "Code Events");
+            model.addAttribute("title", "Events");
             model.addAttribute("events", eventRepository.findAll());
         } else {
             Optional<EventCategory> result = eventCategoryRepository.findById(categoryId);
@@ -153,6 +153,7 @@ public class EventController {
             existingEvent.setEventName(eventToBeEdited.getEventName());
             existingEvent.setLocation(eventToBeEdited.getLocation());
             existingEvent.setNumberOfAttendees(eventToBeEdited.getNumberOfAttendees());
+            existingEvent.setEventCategory(eventToBeEdited.getEventCategory());
             // Update other properties as needed
 
             // Access the existing EventDetails
@@ -165,7 +166,8 @@ public class EventController {
             // Save the updated event back to the database
             eventRepository.save(existingEvent);
 
-        return "redirect:";
+            // Redirect to the detail page of the edited event
+            return "redirect:/events/detail?eventId=" + existingEvent.getId();
         }
 
         return "redirect:";

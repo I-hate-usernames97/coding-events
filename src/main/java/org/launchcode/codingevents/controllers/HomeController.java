@@ -20,12 +20,12 @@ public class HomeController {
     @GetMapping
     public String index(Model model) {
 
-        model.addAttribute("title", "Code Events");
+        model.addAttribute("title", "Events");
         model.addAttribute("events", eventRepository.findAll());
         model.addAttribute("searchForm", new SearchForm());
         model.addAttribute("error", "");
 
-        return "index";
+        return "events/index";
     }
 
 }

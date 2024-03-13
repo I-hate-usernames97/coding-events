@@ -11,8 +11,6 @@ import java.util.List;
 @Repository
 public interface EventRepository extends CrudRepository<Event, Integer> {
     List<Event> findAllByUserId(int userId);
-    List<Event> findAllByEventName(String eventName);
-    List<Event> findAllByLocation(String location);
     @Query("SELECT e FROM Event e JOIN e.user u WHERE LOWER(e.eventName) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(e.location) LIKE LOWER(CONCAT('%', :query, '%')) OR LOWER(u.username) LIKE LOWER(CONCAT('%', :query, '%'))")
     List<Event> findAllByQuery(@Param("query") String query);
 
