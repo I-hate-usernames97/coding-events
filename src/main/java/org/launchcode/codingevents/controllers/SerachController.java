@@ -45,31 +45,4 @@ public class SerachController {
         return "search/index";
     }
 
-
-//    @PostMapping
-//    public String displaySearchResults(@ModelAttribute @Valid SearchForm searchQuery, Model model){
-//
-//        model.addAttribute("title", "Search Results");
-//
-//        if (searchQuery.getQuery() == null || searchQuery.getSearchType() == null) {
-//            model.addAttribute("title", "Invalid Search");
-//            return "search/index"; // Display the error on the same page
-//        }
-//
-//        if (searchQuery.getSearchType().equals("user")) {
-//            Optional<User> result = Optional.ofNullable(userRepository.findByUsername(searchQuery.getQuery()));
-//            if (result.isEmpty()) {
-//                model.addAttribute("title", "User not found");
-//                return "search/index"; // Display the error on the same page
-//            }
-//            User user = result.get();
-//            model.addAttribute("events", eventRepository.findAllByUserId(user.getId()));
-//        } else if (searchQuery.getSearchType().equals("eventName")) {
-//            model.addAttribute("events", eventRepository.findAllByEventName(searchQuery.getQuery()));
-//        } else if (searchQuery.getSearchType().equals("location")) {
-//            model.addAttribute("events", eventRepository.findAllByLocation(searchQuery.getQuery()));
-//        }
-//
-//        return "search/index";
-//    }
 }

@@ -2,7 +2,6 @@ package org.launchcode.codingevents.controllers;
 
 
 import org.launchcode.codingevents.controllers.models.*;
-import org.launchcode.codingevents.data.EventCategoryRepository;
 import org.launchcode.codingevents.data.EventRepository;
 import org.launchcode.codingevents.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +24,6 @@ public class EventController {
     private EventRepository eventRepository;
 
     @Autowired
-    private EventCategoryRepository eventCategoryRepository;
-
-
-    @Autowired
     AuthenticationController authenticationController;
 
     @Autowired
@@ -41,25 +36,14 @@ public class EventController {
 
 
     @GetMapping
-    public String displayEvents(@RequestParam(required = false) Integer categoryId, Model model) {
+    public String displayEvents(Model model) {
 
 
         model.addAttribute("searchForm", new SearchForm());
 
-        if (categoryId == null ) {
             model.addAttribute("title", "Events");
             model.addAttribute("events", eventRepository.findAll());
-        } else {
-            Optional<EventCategory> result = eventCategoryRepository.findById(categoryId);
-            if (result.isEmpty()) {
-                model.addAttribute("title", "Invalid Category ID: " + categoryId);
-            } else {
-                EventCategory category = result.get();
-                model.addAttribute("title", "Events in category: " + category.getName());
-                model.addAttribute("events", category.getEvents());
-            }
 
-        }
         return "events/index";
     }
 
@@ -71,7 +55,7 @@ public class EventController {
         model.addAttribute("title", "Create Event");
         model.addAttribute(new Event());
         model.addAttribute("searchForm", new SearchForm());
-        model.addAttribute("categories", eventCategoryRepository.findAll());
+        model.addAttribute("types",EventType.values());
         model.addAttribute("user", userRepository.findById(user.getId()));
         return "events/create";
     }
@@ -84,7 +68,6 @@ public class EventController {
 
         if(errors.hasErrors()) {
             model.addAttribute("title", "Create Event");
-            model.addAttribute("categories", eventCategoryRepository.findAll());
             model.addAttribute("user", userRepository.findById(user.getId()));
             return "events/create";
         }
@@ -101,7 +84,6 @@ public class EventController {
 
         User user = getCurrentUser(request);
         model.addAttribute("searchForm", new SearchForm());
-
 
         model.addAttribute("title", "Delete Events");
         model.addAttribute("events", eventRepository.findAllByUserId(user.getId()));
@@ -153,7 +135,7 @@ public class EventController {
             existingEvent.setEventName(eventToBeEdited.getEventName());
             existingEvent.setLocation(eventToBeEdited.getLocation());
             existingEvent.setNumberOfAttendees(eventToBeEdited.getNumberOfAttendees());
-            existingEvent.setEventCategory(eventToBeEdited.getEventCategory());
+            existingEvent.setType(eventToBeEdited.getType());
             // Update other properties as needed
 
             // Access the existing EventDetails
@@ -188,12 +170,19 @@ public class EventController {
             if(event.getUser().getId() == user.getId()) {
             model.addAttribute("event", event);
             model.addAttribute("user", userRepository.findById(user.getId()));
-            model.addAttribute("categories", eventCategoryRepository.findAll());
-            return "events/edit";
+            model.addAttribute("types",EventType.values());
+                return "events/edit";
             } else {
                 return "/";
             }
         }
+        return "redirect:";
+    }
+
+    @GetMapping("join/{eventId}")
+    public String joinEvent(Model model, @PathVariable int eventId, HttpServletRequest request ){
+
+        System.out.println(eventId);
         return "redirect:";
     }
 

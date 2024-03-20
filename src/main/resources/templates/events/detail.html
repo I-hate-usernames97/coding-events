@@ -32,7 +32,7 @@
 
         <tr>
             <th>Event Category</th>
-            <td th:text="${event.eventCategory.name}"></td>
+            <td th:text="${event.type.displayName}"></td>
         </tr>
 
         <tr>
@@ -45,10 +45,31 @@
     </table>
 
 <div th:if="${event.user.id == user.id }">
-    <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
+
+    <nav class='navbar'>
+        <div class='navbar-container'>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                <a th:href="@{/events/edit/{id}(id=${event.id})}">Edit</a>
+                </li>
+                <li class="nav-item">
+                <a href="/events">home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
 </div>
 <div th:unless="${event.user.id == user.id }">
-    <a href="/events">home</a>
+    <nav class='navbar'>
+        <div class='navbar-container'>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/events">home</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
 
 </body>

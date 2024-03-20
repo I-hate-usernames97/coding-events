@@ -3,6 +3,8 @@ package org.launchcode.codingevents.controllers.models;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -21,6 +23,10 @@ public class User extends AbstractEntity {
     @OneToMany(mappedBy = "user")
     private final List<Event> events = new ArrayList<>();
 
+    @ManyToOne
+    @JoinColumn(name = "event_id")
+    private User attending;
+
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
@@ -33,6 +39,14 @@ public class User extends AbstractEntity {
 
     public List<Event> getEvents() {
         return events;
+    }
+
+    public User getAttending() {
+        return attending;
+    }
+
+    public void setAttending(User attending) {
+        this.attending = attending;
     }
 
     public String getUsername() {

@@ -54,13 +54,12 @@
 
     <div class="form-group">
         <label>Event Category
-            <select th:field="${event.eventCategory}">
-                <option th:each="category : ${categories}"
-                        th:value="${category.id}"
-                        th:text="${category.name}"
+            <select th:field="${event.type}">
+                <option th:each="type : ${types}"
+                        th:value="${type}"
+                        th:text="${type.displayName}"
                 ></option>
             </select>
-            <p class="error" th:errors="${event.eventCategory}"></p>
         </label>
     </div>
 

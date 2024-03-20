@@ -6,6 +6,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Entity
@@ -23,14 +25,16 @@ public class Event extends AbstractEntity {
     @Positive(message = "Number of attendees must be one or more.")
     private int numberOfAttendees;
 
-    @ManyToOne
-    @NotNull(message = "Category is required")
-    private EventCategory eventCategory;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToMany(mappedBy = "user")
+    private final List<Event> attending = new ArrayList<>();
+
+
+    private EventType type;
 
     @Valid
     @NotNull
@@ -39,11 +43,11 @@ public class Event extends AbstractEntity {
 
 
 
-    public Event(String eventName, String location, int numberOfAttendees, EventCategory eventCategory, User user) {
+    public Event(String eventName, String location, EventType type, int numberOfAttendees, User user) {
         this.eventName = eventName;
         this.location = location;
         this.numberOfAttendees = numberOfAttendees;
-        this.eventCategory = eventCategory;
+        this.type = type;
         this.user = user;
     }
 
@@ -74,13 +78,6 @@ public class Event extends AbstractEntity {
         this.numberOfAttendees = numberOfAttendees;
     }
 
-    public EventCategory getEventCategory() {
-        return eventCategory;
-    }
-
-    public void setEventCategory(EventCategory eventCategory) {
-        this.eventCategory = eventCategory;
-    }
 
     public EventDetails getEventDetails() {
         return eventDetails;
@@ -90,12 +87,24 @@ public class Event extends AbstractEntity {
         this.eventDetails = eventDetails;
     }
 
+    public EventType getType() {
+        return type;
+    }
+
+    public void setType(EventType type) {
+        this.type = type;
+    }
+
     public User getUser() {
         return user;
     }
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Event> getAttending() {
+        return attending;
     }
 
     @Override
