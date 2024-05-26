@@ -23,7 +23,7 @@ public class User extends AbstractEntity {
     private final List<Event> events = new ArrayList<>();
 
     @ManyToMany(mappedBy = "attendees")
-    private List<Event> eventsAttendeen;
+    private List<Event> eventsAttending;
 
 
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
@@ -43,12 +43,12 @@ public class User extends AbstractEntity {
         return username;
     }
 
-    public List<Event> getEventsAttendeen() {
-        return eventsAttendeen;
+    public List<Event> getEventsAttending() {
+        return eventsAttending;
     }
 
-    public void setEventsAttendeen(List<Event> eventsAttendeen) {
-        this.eventsAttendeen = eventsAttendeen;
+    public void setEventsAttending(List<Event> eventsAttending) {
+        this.eventsAttending = eventsAttending;
     }
 
     public boolean isMatchingPassword(String password) {

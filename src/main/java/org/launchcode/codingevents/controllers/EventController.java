@@ -141,6 +141,7 @@ public class EventController {
             existingEvent.setNumberOfAttendees(eventToBeEdited.getNumberOfAttendees());
             existingEvent.setType(eventToBeEdited.getType());
             // Update other properties as needed
+            existingEvent.setNumberOfAttendees(existingEvent.getAttendees().size());
 
             // Access the existing EventDetails
             EventDetails existingEventDetails = existingEvent.getEventDetails();

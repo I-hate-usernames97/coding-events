@@ -11,6 +11,23 @@
 
 <div th:replace="fragments :: displayEvents"></div>
 
+
+<p th:unless="${user.eventsAttending} and ${user.eventsAttending.size()}" >Not Attending Any events!</p>
+
+<th:block th:if="${user.eventsAttending} and ${user.eventsAttending.size()}">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Event Attending</th>
+        </tr>
+        </thead>
+        <tr th:each="event : ${user.eventsAttending}">
+            <td>
+                <a th:href="'/events/detail?eventId=' + ${event.id}" th:text="${event.eventName}"></a>
+            </td>
+        </tr>
+    </table>
+</th:block>
 <nav class='navbar'>
     <div class='navbar-container'>
         <ul class="nav-menu">
