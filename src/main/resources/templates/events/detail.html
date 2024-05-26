@@ -32,7 +32,8 @@
 
         <tr>
             <th>Event Category</th>
-            <td th:text="${event.type.displayName}"></td>
+            <td th:if="${event.type != null}" th:text="${event.type.displayName}"></td>
+            <td th:if="${event.type == null}">No category specified</td>
         </tr>
 
         <tr>
@@ -41,6 +42,12 @@
                 <span th:text="${event.user.username} "></span>
             </td>
         </tr>
+
+        <h2>Attendees</h2>
+        <ul>
+            <li th:each="attendee : ${event.attendees}" th:text="${attendee.username}">Attendee Name</li>
+        </ul>
+        <p th:if="${event.attendees == null}">No attendees yet.</p>
 
     </table>
 

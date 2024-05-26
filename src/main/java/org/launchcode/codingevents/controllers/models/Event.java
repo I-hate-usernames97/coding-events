@@ -22,16 +22,13 @@ public class Event extends AbstractEntity {
     @NotBlank(message = "location is required")
     private String location;
 
-    @Positive(message = "Number of attendees must be one or more.")
+
     private int numberOfAttendees;
 
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-
-    @OneToMany(mappedBy = "user")
-    private final List<Event> attending = new ArrayList<>();
 
 
     private EventType type;
@@ -41,7 +38,13 @@ public class Event extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL)
     private EventDetails eventDetails;
 
-
+    @ManyToMany
+    @JoinTable(
+            name = "event_attendees",
+            joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> attendees = new ArrayList<>();
 
     public Event(String eventName, String location, EventType type, int numberOfAttendees, User user) {
         this.eventName = eventName;
@@ -103,8 +106,12 @@ public class Event extends AbstractEntity {
         this.user = user;
     }
 
-    public List<Event> getAttending() {
-        return attending;
+    public List<User> getAttendees() {
+        return attendees;
+    }
+
+    public void setAttendees(List<User> attendees) {
+        this.attendees = attendees;
     }
 
     @Override

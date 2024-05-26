@@ -56,8 +56,11 @@
                     <td>
                         <a th:href="'/events/detail?eventId=' + ${event.id}" th:text="${event.eventName}"></a>
                     </td>
-                    <td>
-                        <a th:href="'/events/join?eventId=' + ${event.id}">Join</a>
+                    <td class="nav-item">
+                        <form th:action="@{/events/join/{eventId}(eventId=${event.id})}" method="post">
+                            <button type="submit">Join</button>
+                        </form>
+<!--                        <a th:href="'/events/join?eventId=' + ${event.id}">Join</a>-->
                     </td>
                 </tr>
         </table>

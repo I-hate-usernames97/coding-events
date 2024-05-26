@@ -68,12 +68,16 @@ public class EventController {
 
         if(errors.hasErrors()) {
             model.addAttribute("title", "Create Event");
+            model.addAttribute("types",EventType.values());
             model.addAttribute("user", userRepository.findById(user.getId()));
             return "events/create";
         }
 
 
         newEvent.setUser(user);
+        newEvent.getAttendees().add(user);
+        newEvent.setNumberOfAttendees(newEvent.getAttendees().size());
+
 
         eventRepository.save(newEvent);
         return "redirect:";
@@ -179,12 +183,31 @@ public class EventController {
         return "redirect:";
     }
 
-    @GetMapping("join/{eventId}")
-    public String joinEvent(Model model, @PathVariable int eventId, HttpServletRequest request ){
+    @PostMapping("join/{eventId}")
+    public String joinEvent(Model model, @PathVariable int eventId, HttpServletRequest request) {
+        User user = getCurrentUser(request);
+        model.addAttribute("searchForm", new SearchForm());
 
-        System.out.println(eventId);
-        return "redirect:";
+        Optional<Event> existingEventOptional = eventRepository.findById(eventId);
+
+        if (existingEventOptional.isPresent()) {
+            Event existingEvent = existingEventOptional.get();
+
+            // Check if the user is already in the attendees list
+            if (!existingEvent.getAttendees().contains(user)) {
+                existingEvent.getAttendees().add(user);
+                existingEvent.setNumberOfAttendees(existingEvent.getAttendees().size());
+                eventRepository.save(existingEvent);
+            }
+
+            // Redirect to the detail page of the edited event
+            return "redirect:/events/detail?eventId=" + existingEvent.getId();
+        }
+
+        // Redirect to a suitable error page or the events listing page
+        return "redirect:/events";
     }
+
 
 
 
